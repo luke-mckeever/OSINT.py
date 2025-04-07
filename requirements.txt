@@ -1,0 +1,7 @@
+requests
+python-whois
+pycountry
+time
+base64
+urlparse
+colored

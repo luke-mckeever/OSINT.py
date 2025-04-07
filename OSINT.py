@@ -365,21 +365,20 @@ def account_scan():
 
 def main():
     choice = input(colored('Please Select IOC Scan Type (1-5): ', 'blue')).strip()
-    match choice:
-        case "1":
-            ip_scan()
-        case "2":
-            domain_scan()
-        case "3":
-            url_scan()
-        case "4":
-            hash_scan()
-        case "5":
-            email_scan()
-        case "6":
-            account_scan()
-        case _:
-            print("❌ Invalid choice. Please select a number between 1 and 5.")
+    if choice == "1":
+        ip_scan()
+    elif choice == "2":
+        domain_scan()
+    elif choice == "3":
+        url_scan()
+    elif choice == "4":
+        hash_scan()
+    elif choice == "5":
+        email_scan()
+    elif choice == "6":
+        account_scan()
+    else:
+        print("❌ Invalid choice. Please select a number between 1 and 6.")
 
 main()
 

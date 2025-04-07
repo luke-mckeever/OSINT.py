@@ -16,6 +16,17 @@ This tool intends to query the following DB's:
 Pre-requesites:
 As This will requires the appropriate tooling API, personal API keys are required,
 These will be insertable into the API.config file, and any missing API's will just be skipped
+Python 3 is also required
+
+
+## Getting Started
+
+Use the following command to install the required libraries
+
+```bash
+pip install -r requirements.txt
+```
+
 
 The intended outcome of this tool is the following 
 
