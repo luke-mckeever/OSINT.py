@@ -1,6 +1,4 @@
 requests
 python-whois
 pycountry
-base64
-urlparse
-colored
+termcolor
