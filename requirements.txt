@@ -2,3 +2,5 @@ requests
 python-whois
 pycountry
 termcolor
+configparser
+colorama
