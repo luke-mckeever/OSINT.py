@@ -84,7 +84,7 @@ def main():
     # If --output is provided, capture and log plain output
     if args.output:
         print("")
-        print('[>] Outputting Scan Results to: ', colored(args.output, 'red'))
+        print('[>] Outputting Scan Results to: ', colored(args.output, 'blue'))
         if isinstance(args.output, str):
             output_file = args.output
         else:

@@ -28,15 +28,15 @@ def hash_scan(file_hash):
         file_names = attributes.get("names", [])
         file_names_str = ", ".join(file_names) if file_names else "N/A"
 
-        print('[+] Virus Total URL:', colored(f'https://www.virustotal.com/gui/file/{sha256_hash}', 'red'))
-        print('[+] SHA256:', colored(sha256_hash, 'red'))
-        print('[+] MD5   :', colored(md5_hash, 'red'))
-        print('[+] SHA1  :', colored(sha1_hash, 'red'))
-        print('[+] File Name(s):', colored(file_names_str, 'red'))
+        print('[+] Virus Total URL:', colored(f'https://www.virustotal.com/gui/file/{sha256_hash}', 'blue'))
+        print('[+] SHA256:', colored(sha256_hash, 'blue'))
+        print('[+] MD5   :', colored(md5_hash, 'blue'))
+        print('[+] SHA1  :', colored(sha1_hash, 'blue'))
+        print('[+] File Name(s):', colored(file_names_str, 'blue'))
         print('[+] Malicious:', colored(stats.get('malicious', 0), 'red'))
         print('[+] Suspicious:', colored(stats.get('suspicious', 0), 'yellow'))
         print('[+] Harmless:', colored(stats.get('harmless', 0), 'green'))
-        print('[+] Undetected:', stats.get('undetected', 0))
+        print('[+] Undetected:', colored(stats.get('undetected', 0), 'blue'))
         print("")
     else:
         print(colored("[!] VirusTotal lookup failed", 'yellow'))
@@ -58,10 +58,10 @@ def hash_scan(file_hash):
         results = response.json()
         if results:
             first_result = results[0]
-            print('[+] SHA256:', colored(sha256_hash, 'red'))
-            print('[+] Threat Score:', colored(first_result.get("threat_score", "N/A"), 'red'))
-            print('[+] Verdict:', colored(first_result.get("verdict", "N/A"), 'red'))
-            print('[+] Scan Link:', colored(f'https://www.hybrid-analysis.com/sample/{sha256_hash}', 'red'))
+            print('[+] SHA256:', colored(sha256_hash, 'blue'))
+            print('[+] Threat Score:', colored(first_result.get("threat_score", "N/A"), 'blue'))
+            print('[+] Verdict:', colored(first_result.get("verdict", "N/A"), 'blue'))
+            print('[+] Scan Link:', colored(f'https://www.hybrid-analysis.com/sample/{sha256_hash}', 'blue'))
         else:
             print(colored('[!] No results found on Hybrid Analysis', 'yellow'))
     else:

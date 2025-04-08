@@ -24,7 +24,7 @@ def ip_scan(ip):
     try:
         whoarray = whois.whois(ip)
         for key, value in whoarray.items():
-            print('[+] ' + f"{key}: {colored(value, 'red')}")
+            print('[+] ' + f"{key}: {colored(value, 'blue')}")
             print("")
     except:
         print(colored('[!] WHOIS failed.', 'yellow'))
@@ -34,7 +34,7 @@ def ip_scan(ip):
     print(colored('###### Reverse IP Lookup ######', 'green'))
     try:
         rev = socket.gethostbyaddr(ip)
-        print('[+] This IP resolves to: ' + colored(rev[0], 'red'))
+        print('[+] This IP resolves to: ' + colored(rev[0], 'blue'))
         print("")
     except:
         print(colored('[+] IP is not resolvable', 'yellow'))
@@ -47,12 +47,12 @@ def ip_scan(ip):
     response = requests.get("https://api.abuseipdb.com/api/v2/check", headers=headers, params=params)
     if response.status_code == 200:
         d = response.json()['data']
-        print(f"[+] IP Address: {colored(d['ipAddress'], 'red')}")
-        print(f"[+] Is Whitelisted: {colored('Yes' if d['isWhitelisted'] else 'No', 'red')}")
-        print(f"[+] Country: {colored(get_country_name(d['countryCode']), 'red')}")
-        print(f"[+] Domain: {colored(d['domain'], 'red')}")
-        print(f"[+] Reports: {colored(d['totalReports'], 'red')}")
-        print(f"[+] Last Report: {colored(d['lastReportedAt'], 'red')}")
+        print(f"[+] IP Address: {colored(d['ipAddress'], 'blue')}")
+        print(f"[+] Is Whitelisted: {colored('Yes' if d['isWhitelisted'] else 'No', 'blue')}")
+        print(f"[+] Country: {colored(get_country_name(d['countryCode']), 'blue')}")
+        print(f"[+] Domain: {colored(d['domain'], 'blue')}")
+        print(f"[+] Reports: {colored(d['totalReports'], 'blue')}")
+        print(f"[+] Last Report: {colored(d['lastReportedAt'], 'blue')}")
         print("")
     else:
         print(colored("[!] AbuseIPDB lookup failed", 'yellow'))
@@ -69,7 +69,7 @@ def ip_scan(ip):
         print('[+] Malicious:', colored(stats.get('malicious', 0), 'red'))
         print('[+] Suspicious:', colored(stats.get('suspicious', 0), 'yellow'))
         print('[+] Harmless:', colored(stats.get('harmless', 0), 'green'))
-        print('[+] Undetected:', stats.get('undetected', 0))
+        print('[+] Undetected:', colored(stats.get('undetected', 0), 'blue'))
         print("")
     else:
         print(colored("[!] VirusTotal lookup failed", 'yellow'))
