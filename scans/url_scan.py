@@ -82,8 +82,10 @@ def url_scan(url):
                 print("")
         else:
             print(colored("[!] URLScan.io scan request failed", "yellow"))
+            print("")
     except Exception as e:
         print(colored(f"[!] URLScan.io error: {e}", "yellow"))
+        print("")
 
     # VirusTotal
     print(colored('###### Virus Total Results ######', 'green'))
