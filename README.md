@@ -22,7 +22,7 @@ OSINT-Scanner/
 │   ├── hash_scan.py
 │   ├── email_scan.py         # Placeholder
 │   ├── account_scan.py       # Placeholder
-└── install_and_setup.bat     # Optional: batch file to install deps and prep environment
+└── install.bat     # Optional: batch file to install deps and prep environment
 ```
 
 
