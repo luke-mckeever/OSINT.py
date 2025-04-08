@@ -110,4 +110,3 @@ python OSINT.py --hash abc123... --output results.txt
 
 Happy scanning! 🕵️‍♂️
 
-The intended outcome of this tool is the following 
