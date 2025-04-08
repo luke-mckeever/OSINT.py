@@ -53,7 +53,7 @@ When logged in, browse to the [account api](https://www.abuseipdb.com/account/ap
 When logged in, browse to the [API](https://hunter.io/api-keys) page, to obtain your key click `+ New key`
 - ##### Hybrid Analysis - Create Your Account [HERE](https://www.hybrid-analysis.com/signup) (FREE)
 When logged in, browse to [my account](https://www.hybrid-analysis.com/my-account), go to the [API key](https://www.hybrid-analysis.com/my-account?tab=%23api-key-tab) tab and create a new key
-- ##### Have I Been Pwned - Obtain your key [Here][https://haveibeenpwned.com/API/Key]
+- ##### Have I Been Pwned - Obtain your key [Here](https://haveibeenpwned.com/API/Key])
 You will receive an invite email to purchase the API, proceed though the instructions to obtain you key
 
 
