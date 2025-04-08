@@ -67,14 +67,14 @@ def main():
     parser = argparse.ArgumentParser(description="IOC Scanner - OSINT Tool")
     group = parser.add_mutually_exclusive_group()
 
-    group.add_argument('--ip', metavar='IP', help='Scan an IP address')
-    group.add_argument('--domain', metavar='DOMAIN', help='Scan a domain')
-    group.add_argument('--url', metavar='URL', help='Scan a full URL')
-    group.add_argument('--hash', metavar='HASH', help='Scan a file hash')
-    group.add_argument('--email', metavar='EMAIL', help='Scan an email address (coming soon)')
-    group.add_argument('--account', metavar='ACCOUNT', help='Scan an account/username (coming soon)')
+    group.add_argument('-ip', metavar='IP', help='Scan an IP address')
+    group.add_argument('-domain', metavar='DOMAIN', help='Scan a domain')
+    group.add_argument('-url', metavar='URL', help='Scan a full URL')
+    group.add_argument('-hash', metavar='HASH', help='Scan a file hash')
+    group.add_argument('-email', metavar='EMAIL', help='Scan an email address (coming soon)')
+    group.add_argument('-account', metavar='ACCOUNT', help='Scan an account/username (coming soon)')
 
-    parser.add_argument('--output', nargs='?', const=True, metavar='FILE', help='Save scan output to text file')
+    parser.add_argument('-output', nargs='?', const=True, metavar='FILE', help='Save scan output to text file')
 
     args = parser.parse_args()
 

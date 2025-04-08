@@ -84,12 +84,12 @@ Only fill in the keys you need — unused services can be left out.
 Basic usage:
 
 ```bash
-python OSINT.py --ip 8.8.8.8
-python OSINT.py --url https://example.com
-python OSINT.py --domain example.com
-python OSINT.py --hash xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-python OSINT.py --email jogn.doe@example.com 
-python OSINT.py --account john.doe
+python OSINT.py -ip 8.8.8.8
+python OSINT.py -url https://example.com
+python OSINT.py -domain example.com
+python OSINT.py -hash xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+python OSINT.py -email jogn.doe@example.com 
+python OSINT.py -account john.doe
 ```
 
 #### 5. **Optional: Save Results to File**
