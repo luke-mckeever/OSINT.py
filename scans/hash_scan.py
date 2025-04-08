@@ -62,7 +62,39 @@ def hash_scan(file_hash):
             print('[+] Threat Score:', colored(first_result.get("threat_score", "N/A"), 'blue'))
             print('[+] Verdict:', colored(first_result.get("verdict", "N/A"), 'blue'))
             print('[+] Scan Link:', colored(f'https://www.hybrid-analysis.com/sample/{sha256_hash}', 'blue'))
+            print("")
         else:
             print(colored('[!] No results found on Hybrid Analysis', 'yellow'))
+            print("")
     else:
         print(colored(f'[!] Hybrid Analysis lookup failed with status code {response.status_code}', 'yellow'))
+        print("")
+
+    # MalwareBazaar
+    print(colored('###### MalwareBazaar Results ######', 'green'))
+    mb_url = "https://mb-api.abuse.ch/api/v1/"
+    mb_payload = {
+        "query": "get_info",
+        "hash": file_hash
+    }
+    try:
+        mb_response = requests.post(mb_url, data=mb_payload)
+        if mb_response.status_code == 200:
+            mb_data = mb_response.json()
+            if mb_data.get("query_status") == "ok":
+                result = mb_data["data"][0]
+                hash_result = result.get("sha256_hash", "N/A")
+                print('[+] SHA256:', colored(hash_result, 'blue'))
+                print('[+] File Type:', colored(result.get("file_type", "N/A"), 'blue'))
+                print('[+] Signature:', colored(result.get("signature", "N/A"), 'blue'))
+                print('[+] Delivery Method:', colored(result.get("delivery_method", "N/A"), 'blue'))
+                print('[+] Reporter:', colored(result.get("reporter", "N/A"), 'blue'))
+                print('[+] First Seen:', colored(result.get("first_seen", "N/A"), 'blue'))
+                print('[+] Tags:', colored(", ".join(result.get("tags", [])), 'blue'))
+                print('[+] Sample URL:', colored('https://bazaar.abuse.ch/sample/' + hash_result, 'blue'))
+            else:
+                print(colored(f"[-] No results found on MalwareBazaar for hash: {file_hash}", "yellow"))
+        else:
+            print(colored("[!] MalwareBazaar API request failed", "red"))
+    except Exception as e:
+        print(colored(f"[!] Error querying MalwareBazaar: {e}", "red"))

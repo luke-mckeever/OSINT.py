@@ -45,6 +45,7 @@ def domain_scan(domain):
     print(colored('###### URLScan.io Results ######', 'green'))
     headers = {"API-Key": URLSCAN_API_KEY, "Content-Type": "application/json"}
     data = {"url": f"http://{domain}", "visibility": "public"}
+    print(data)
     try:
         response = requests.post("https://urlscan.io/api/v1/scan/", json=data, headers=headers)
         if response.status_code == 200:
@@ -69,6 +70,7 @@ def domain_scan(domain):
                 print("")
         else:
             print(colored("[!] URLScan.io scan request failed.", "yellow"))
+            print(colored("[!] Reccomend submitting full URL", "yellow"))
             print("")
     except Exception as e:
         print(colored(f"[!] URLScan.io error: {e}", "yellow"))
@@ -83,11 +85,11 @@ def domain_scan(domain):
         data = response.json()
         stats = data.get("data", {}).get("attributes", {}).get("last_analysis_stats", {})
         gui_url = f"https://www.virustotal.com/gui/domain/{domain}"
-        print('[+] Virus Total URL:', colored(gui_url, 'blue'))
-        print('[+] Malicious:', colored(stats.get('malicious', 0), 'red'))
-        print('[+] Suspicious:', colored(stats.get('suspicious', 0), 'yellow'))
-        print('[+] Harmless:', colored(stats.get('harmless', 0), 'green'))
-        print('[+] Undetected:', colored(stats.get('undetected', 0), 'blue'))
+        print('[+] Virus Total Report URL:', colored(gui_url, 'blue'))
+        print('[+] Malicious Reports:', colored(stats.get('malicious', 0), 'red'))
+        print('[+] Suspicious Reports:', colored(stats.get('suspicious', 0), 'yellow'))
+        print('[+] Harmless Reports:', colored(stats.get('harmless', 0), 'green'))
+        print('[+] Undetected Reports:', colored(stats.get('undetected', 0), 'blue'))
         print("")
     else:
         print(colored("[!] VirusTotal lookup failed", 'yellow'))

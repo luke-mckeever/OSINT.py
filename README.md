@@ -20,7 +20,7 @@ OSINT.py
 │   ├── domain_scan.py
 │   ├── url_scan.py
 │   ├── hash_scan.py
-│   ├── email_scan.py         # Placeholder
+│   ├── email_scan.py         
 │   ├── account_scan.py       # Placeholder
 └── install.bat     # Optional: batch file to install deps and prep environment
 ```
@@ -29,20 +29,33 @@ OSINT.py
 ### Onboarded Tools:
 - Virus Total
 - URLScan.io
-- Hybrid Analysis
+- Hybrid Analysis (API undergoing maintenance)
 - AbuseIPDB
 - Hunter.io
+- HaveIBeenPwned
+- Malware Bazar
 
 ### Soon To come:
-- Malware Bazar
 - CloudFlare Radar
-- HaveIBeenPwned
 - ChatGPT (eventually)
 
-Pre-requesites:
-As This will requires the appropriate tooling API, personal API keys are required,
-These will be insertable into the API.config file, and any missing API's will just be skipped
-Python 3 is also required
+## How to Get your API Keys
+
+> Please note all API's are not required for this tool to work. 
+
+- ##### Virus Total - Create Your Account [Here](https://www.virustotal.com/gui/join-us) (FREE)
+When logged in, use the drop down on the right and select `API Key` to obtain your key
+- ##### URLScan.io - Create Your Account [Here](https://urlscan.io/user/signup) (FREE)
+When logged in, browse to the [USER](https://urlscan.io/user/) page and click `settings & API` , to obtain your key click `+ New API key`
+- ##### Abuse IPDB - Create Your Account [HERE](https://www.abuseipdb.com/register?plan=free) (FREE)
+When logged in, browse to the [account api](https://www.abuseipdb.com/account/api) page and click `Create Key`
+- ##### Hunter.io - Create Your Account [HERE](https://hunter.io/users/sign_up) (FREE)
+When logged in, browse to the [API](https://hunter.io/api-keys) page, to obtain your key click `+ New key`
+- ##### Hybrid Analysis - Create Your Account [HERE](https://www.hybrid-analysis.com/signup) (FREE)
+When logged in, browse to [my account](https://www.hybrid-analysis.com/my-account), go to the [API key](https://www.hybrid-analysis.com/my-account?tab=%23api-key-tab) tab and create a new key
+- ##### Have I Been Pwned - Obtain your key [Here][https://haveibeenpwned.com/API/Key]
+You will receive an invite email to purchase the API, proceed though the instructions to obtain you key
+
 
 
 ## Getting Started

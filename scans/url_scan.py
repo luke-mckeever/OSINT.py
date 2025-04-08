@@ -109,18 +109,76 @@ def url_scan(url):
                     stats = data.get("data", {}).get("attributes", {}).get("stats", {})
                     print('[+] Virus Total Analysis ID:', colored(analysis_id, 'blue'))
                     print('[+] VirusTotal Report URL:', colored(gui_url, 'blue'))
+                    print('[+] Malicious Reports:', colored(stats.get('malicious', 0), 'red'))
+                    print('[+] Suspicious Reports:', colored(stats.get('suspicious', 0), 'yellow'))
+                    print('[+] Harmless Reports:', colored(stats.get('harmless', 0), 'green'))
+                    print('[+] Undetected Reports:', colored(stats.get('undetected', 0), 'blue'))
                     print("")
-                    print('[+] Malicious:', colored(stats.get('malicious', 0), 'red'))
-                    print('[+] Suspicious:', colored(stats.get('suspicious', 0), 'yellow'))
-                    print('[+] Harmless:', colored(stats.get('harmless', 0), 'green'))
-                    print('[+] Undetected:', colored(stats.get('undetected', 0), 'blue'))
                     break
                 else:
                     print(f"[!] Attempt {attempt + 1}: VirusTotal scan still processing...")
             else:
                 print(colored("[!] VirusTotal scan not ready after multiple attempts", "yellow"))
+                print("")
         else:
             print(colored("[!] Failed to submit URL to VirusTotal", 'yellow'))
+            print("")
 
     except Exception as e:
         print(colored(f"[!] VirusTotal error: {e}", "yellow"))
+
+    # URLHaus
+    print(colored('###### URLHaus Results ######', 'green'))
+    try:
+        urlhaus_api = "https://urlhaus.abuse.ch/api/"
+        normalized_url = url.replace('https://', 'http://').rstrip('/')
+        urlhaus_data = {"url": normalized_url, "query": "get_url"}
+        stripped_host = parsed_url.hostname
+        urlhaus_response = requests.post(urlhaus_api, data=urlhaus_data)
+
+        if urlhaus_response.status_code == 200:
+            if urlhaus_response.text.strip():
+                urlhaus_result = urlhaus_response.json()
+                status = urlhaus_result.get("query_status")
+                if status == "ok":
+                    print('[+] URL:', colored(urlhaus_result.get("url", "N/A"), 'blue'))
+                    print('[+] Host:', colored(urlhaus_result.get("host", "N/A"), 'blue'))
+                    print('[+] Date Added:', colored(urlhaus_result.get("date_added", "N/A"), 'blue'))
+                    print('[+] Threat:', colored(urlhaus_result.get("threat", "N/A"), 'blue'))
+                    print('[+] Reporter:', colored(urlhaus_result.get("reporter", "N/A"), 'blue'))
+                    print('[+] Tags:', colored(", ".join(urlhaus_result.get("tags", [])), 'blue'))
+                    payloads = urlhaus_result.get("payloads", [])
+                    if payloads:
+                        print('[+] Payloads:')
+                        for payload in payloads:
+                            print(f"    - Filename: {payload.get('filename', 'N/A')}")
+                            print(f"      File Type: {payload.get('file_type', 'N/A')}")
+                            print(f"      MD5 Hash: {payload.get('file_hash', 'N/A')}")
+                            print(f"      Signature: {payload.get('signature', 'N/A')}")
+                    print("")
+                elif status == "no_results":
+                    print(colored("[-] URL not found in URLHaus database", 'yellow'))
+                    # Retry with host-only
+                    print(colored("[*] Retrying with host-only search...", 'cyan'))
+                    urlhaus_data = {"host": domain, "query": "get_host"}
+                    urlhaus_response = requests.post(urlhaus_api, data=urlhaus_data)
+                    if urlhaus_response.status_code == 200 and urlhaus_response.text.strip():
+                        urlhaus_result = urlhaus_response.json()
+                        if urlhaus_result.get("query_status") == "ok":
+                            print('[+] Host:', colored(urlhaus_result.get("host", "N/A"), 'blue'))
+                            urls = urlhaus_result.get("urls", [])
+                            print('[+] URL Count:', colored(len(urls), 'blue'))
+                            print('[+] Recent URLs:')
+                            for entry in urls[:3]:
+                                print(f"    - {entry.get('url', 'N/A')} ({entry.get('threat', 'N/A')})")
+                        else:
+                            print(colored("[-] No host-level match in URLHaus either", 'yellow'))
+                else:
+                    print(colored(f"[-] Unexpected URLHaus status: {status}", 'yellow'))
+            else:
+                print(colored("[!] Empty response from URLHaus", 'yellow'))
+        else:
+            print(colored("[!] URLHaus API request failed", 'yellow'))
+    except Exception as e:
+        print(colored(f"[!] URLHaus error: {e}", 'yellow'))
+        print("")

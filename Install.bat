@@ -1,22 +1,23 @@
 @echo off
-SETLOCAL
+SETLOCAL ENABLEEXTENSIONS
 
-REM Set Python path
-SET PYTHON_EXEC=python
+echo Checking if Python is installed...
+where python >nul 2>&1
+IF %ERRORLEVEL% NEQ 0 (
+    echo Python not found. Downloading and installing Python 3.13...
 
-REM Ensure pip is available
-echo [*] Checking pip...
-%PYTHON_EXEC% -m ensurepip >nul 2>&1
+    powershell -Command "Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe -OutFile python-installer.exe"
+    start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
 
-REM Upgrade pip
-echo [*] Upgrading pip...
-%PYTHON_EXEC% -m pip install --upgrade pip
+    echo Python 3.13 installed successfully.
+) ELSE (
+    echo Python is already installed.
+)
 
-REM Install required Python packages
-echo [*] Installing dependencies from requirements.txt...
-%PYTHON_EXEC% -m pip install -r requirements.txt
+echo Installing required Python packages...
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 
-REM Done!
 echo.
 echo [✔] Setup complete!
 echo.
