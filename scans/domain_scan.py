@@ -26,7 +26,7 @@ def domain_scan(domain):
         whoarray = whois.whois(domain)
         for key, value in whoarray.items():
             print('[+] ' + f"{key}: {colored(value, 'red')}")
-            print("")
+        print("")    
     except:
         print(colored('[!] WHOIS lookup failed.', 'yellow'))
         print("")
@@ -82,7 +82,8 @@ def domain_scan(domain):
     if response.status_code == 200:
         data = response.json()
         stats = data.get("data", {}).get("attributes", {}).get("last_analysis_stats", {})
-        print('[+] Virus Total URL:', colored(vt_url, 'red'))
+        gui_url = f"https://www.virustotal.com/gui/domain/{domain}"
+        print('[+] Virus Total URL:', colored(gui_url, 'red'))
         print('[+] Malicious:', colored(stats.get('malicious', 0), 'red'))
         print('[+] Suspicious:', colored(stats.get('suspicious', 0), 'yellow'))
         print('[+] Harmless:', colored(stats.get('harmless', 0), 'green'))

@@ -43,7 +43,7 @@ def print_banner():
     print(colored('██║   ██║╚════██║██║██║╚██╗██║   ██║   ██╔═══╝   ╚██╔╝  ', 'red'))
     print(colored('╚██████╔╝███████║██║██║ ╚████║   ██║██╗██║        ██║   ', 'red'))
     print(colored(' ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝╚═╝╚═╝        ╚═╝   ', 'red'))
-    print(colored('Ver 0.3.3, Brought to you by Luke McKeever', 'blue'))
+    print(colored('Ver 0.3.4, Brought to you by Luke McKeever', 'blue'))
     print("")
 
 
