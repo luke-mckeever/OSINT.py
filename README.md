@@ -10,7 +10,7 @@ Built for threat hunters, SOC analysts, and digital sleuths who want quick answe
 ## Structure:
 
 ```graphql
-OSINT-Scanner/
+OSINT.py
 ├── OSINT.py                  # Main CLI script with argparse, banner, and scan routing
 ├── API.config                # Stores your API keys securely
 ├── requirements.txt          # Lists all Python dependencies
