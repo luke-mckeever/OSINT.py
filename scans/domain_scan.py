@@ -45,7 +45,6 @@ def domain_scan(domain):
     print(colored('###### URLScan.io Results ######', 'green'))
     headers = {"API-Key": URLSCAN_API_KEY, "Content-Type": "application/json"}
     data = {"url": f"http://{domain}", "visibility": "public"}
-    print(data)
     try:
         response = requests.post("https://urlscan.io/api/v1/scan/", json=data, headers=headers)
         if response.status_code == 200:

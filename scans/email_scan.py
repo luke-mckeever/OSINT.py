@@ -9,6 +9,8 @@ config = ConfigParser()
 config.read(os.path.join(os.path.dirname(__file__), '..', 'API.config'))
 HUNTER_API_KEY = config.get("API_KEYS", "HUNTER_API_KEY", fallback="")
 HIBP_API_KEY = config.get("API_KEYS", "HIBP_API_KEY", fallback="")
+MXTOOLBOX_API_KEY = config.get("API_KEYS", "MXTOOLBOX_API_KEY", fallback="")
+
 
 def email_scan(email):
     print("\U0001F50D Running Email Scan...")
@@ -40,7 +42,6 @@ def email_scan(email):
         print("")
     else:
         print(colored("[!] Hunter.io request failed", "yellow"))
-
 
     # === HIBP Section ===
     if not HIBP_API_KEY:
@@ -74,7 +75,6 @@ def email_scan(email):
                 print(f"- {colored(breach_name, 'red')} [{colored(breach_date, 'blue')}]")
                 print(f"   Data Involved: {colored(data_classes, 'blue')}")
                 print(f"   Link to Details: {colored(f'https://haveibeenpwned.com/PwnedWebsites#{breach_name}', 'blue')}")
-                
             else:
                 print(colored(f"   [!] Failed to retrieve full details for {breach_name}", "yellow"))
         print("")
@@ -85,11 +85,35 @@ def email_scan(email):
         print(colored(f"[!] HIBP request failed ({hibp_response.status_code})", "yellow"))
         print("")
 
+    # === MXToolbox SPF, DKIM, DMARC Lookup ===
 
-    # Extract domain from email and run domain scan
+def mx_lookup(record_type, domain):
+    endpoint = f"https://api.mxtoolbox.com/api/v1/Lookup/{record_type}/{domain}"
+    headers = {
+        "Authorization": f"Bearer {MXTOOLBOX_API_KEY}"
+    }
+
+    try:
+        response = requests.get(endpoint, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            print(colored(f"###### MXToolbox {record_type.upper()} Lookup ######", "green"))
+            print(colored(data.get("Information", "No information found"), "blue"))
+            print("")
+        else:
+            print(colored(f"[!] MXToolbox {record_type.upper()} lookup failed ({response.status_code})", "yellow"))
+    except Exception as e:
+        print(colored(f"[!] Exception during {record_type.upper()} lookup: {e}", "red"))
+        
     domain = email.split("@")[-1]
+    if MXTOOLBOX_API_KEY:
+        mx_lookup("spf", domain)
+        mx_lookup("dmarc", domain)
+        mx_lookup("dkim", domain)
+    else:
+        print(colored("[!] Missing MXToolbox API key in API.config", "yellow"))
+
+    # === Domain scan ===
     print(colored("###### Domain Scan Based on Email Domain ######", "green"))
     print("")
     domain_scan(domain)
-
-
