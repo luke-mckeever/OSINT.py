@@ -1,16 +1,42 @@
 # OSINT.py
-The general consensus is that open source intellegence shouldn't be hard 
+The general consensus is that open source intelligence shouldn't be hard 
 
-Please stay tuned for my amazing OSINT tool nicknamed OSINT.py
+**OSINT.py** is a terminal-based tool for investigating IOCs (indicators of compromise) — including IPs, domains, URLs, and file hashes. It’s powered by trusted APIs like VirusTotal, URLScan.io, AbuseIPDB, Hybrid Analysis, and WHOIS, making it easy to get actionable insights fast.
 
-This tool intends to query the following DB's:
+It outputs the results in your terminal, and if you add `--output`, it’ll automatically generate a clean, timestamped log file.
+
+Built for threat hunters, SOC analysts, and digital sleuths who want quick answers without the bloat 🕵️‍♂️⚡
+
+## Structure:
+
+```graphql
+OSINT-Scanner/
+├── OSINT.py                  # Main CLI script with argparse, banner, and scan routing
+├── API.config                # Stores your API keys securely
+├── requirements.txt          # Lists all Python dependencies
+├── scan_YYYY-MM-DD_HHMM.txt  # Auto-generated scan logs (if --output is used)
+├── scans/                    # Modular scan logic lives here
+│   ├── ip_scan.py
+│   ├── domain_scan.py
+│   ├── url_scan.py
+│   ├── hash_scan.py
+│   ├── email_scan.py         # Placeholder
+│   ├── account_scan.py       # Placeholder
+└── install_and_setup.bat     # Optional: batch file to install deps and prep environment
+```
+
+
+### Onboarded Tools:
 - Virus Total
 - URLScan.io
 - Hybrid Analysis
-- Malware Bazar (Not Implemented)
 - AbuseIPDB
 - Hunter.io
-- CloudFlare Radar (Not Implemented)
+
+### Soon To come:
+- Malware Bazar
+- CloudFlare Radar
+- HaveIBeenPwned
 - ChatGPT (eventually)
 
 Pre-requesites:
@@ -21,57 +47,67 @@ Python 3 is also required
 
 ## Getting Started
 
-Use the following command to install the required libraries
+#### 1. **Clone or Download the Repo**
+
+```bash
+git clone https://github.com/your-username/OSINT.py.git
+cd OSINT.py
+```
+
+#### 2. **Install Dependencies**
+
+Use the provided batch file (Windows): install_and_setup.bat
+
+Or manually:
 
 ```bash
 pip install -r requirements.txt
 ```
 
+#### 3. **Set Up Your API Keys**
+
+Create a file named `API.config` in the root folder with the following format:
+A template has been added for ease of use, the values in here can just be changed
+
+```ini
+[API_KEYS]
+VT_API_KEY = your_virustotal_key
+URLSCAN_API_KEY = your_urlscan_key
+ABUSEIPDB_API_KEY = your_abuseipdb_key
+HYBRID_API_KEY = your_hybrid_analysis_key
+```
+
+Only fill in the keys you need — unused services can be left out.
+
+#### 4. **Run the Tool**
+
+Basic usage:
+
+```bash
+python OSINT.py --ip 8.8.8.8
+python OSINT.py --url https://example.com
+python OSINT.py --domain example.com
+python OSINT.py --hash xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+python OSINT.py --email jogn.doe@example.com 
+python OSINT.py --account john.doe
+```
+
+#### 5. **Optional: Save Results to File**
+
+Use the `--output` flag:
+
+```bash
+python OSINT.py --domain example.com --output
+```
+
+This creates `scan_YYYY-MM-DD_HHMM.txt` automatically. Or specify a custom filename:
+
+```bash
+python OSINT.py --hash abc123... --output results.txt
+```
+
+---
+
+Happy scanning! 🕵️‍♂️
 
 The intended outcome of this tool is the following 
-
-1. Accept input of an IOC of eother domain, URL, IP or email 
-2. preform API calls for from the listed sources based on the provided IOC
-3. Verify IOC Type and preform the appropriate API calls:
-  - Virus Total (if IOC of type: File Hash, IP, URL or Domain)
-      If the IOC type is not within the accepted list if will not preform any API calls from Virus total
-      If the IOC type is within the accepted list & previous scans of IOC exist preform API call for given IOC and return results (no need to further submit)
-      If no previous scans of IOC exist submit the IOC to virus total to preform analysis
-      If IOC has been submitted to Virus total, preform API call and return results
-  - URLscan.io (if IOC of type: URL or Domain)
-      If the IOC type is not within the accepted list if will not preform any API calls from URLScan.io
-      If the IOC type is within the accepted list & previous scans of IOC exist preform API call for given IOC and return results (no need to further submit)
-      If no previous scans of IOC exist submit the IOC to URLScan.io to preform analysis
-      If IOC has been submitted to URLScan.io, preform API call and return results
-  - Hybrid Analysis (if IOC of type: File Hash)
-      If the IOC type is not within the accepted list if will not preform any API calls from Hybrid Analysis
-      If the IOC type is within the accepted list & previous scans of IOC exist preform API call for given IOC and return results (no need to further submit)
-      If no previous scans of IOC exist submit the IOC to Hybrid Analysis to preform analysis
-      If IOC has been submitted to Hybrid Analysis, preform API call and return results
-  - AbuseIPDB (if IOC of type: IP)
-      If the IOC type is not within the accepted list if will not preform any API calls from AbuseIPDB
-      If the IOC type is within the accepted list return results
-  - DNS Lookup (if IOC of type: Domain, URL or IP)
-      If the IOC type is not within the accepted list if will not preform a DNS lookup
-      If the IOC type is within the accepted list return results
-  - Reverse DNS Lookup (if IOC of type: Domain, URL or IP)
-      If the IOC type is not within the accepted list if will not preform a reverse DNS lookup
-      If the IOC type is within the accepted list return results
-  - Hunter.io (if IOC of type: email)
-      If the IOC type is not within the accepted list if will not preform any API calls from Hunter.io
-      If the IOC type is within the accepted list & previous scans of IOC exist preform API call for given IOC and return results (no need to further submit)
-      If no previous scans of IOC exist submit the IOC to Hunter.io to preform analysis
-      If IOC has been submitted to Hunter.io, preform API call and return results
-4. Display all relevent information in an elegant way upon copmpletion of the script
-
-    
-  - Coming Soon: Chat GPT (if IOC of type: any)
-      Intended outcome: 
-        If the IOC type is not within the accepted list if will not preform any API calls from ChatGPT
-        If the IOC type is within the accepted list submit the IOC to ChatGPT with the provided role and promt 
-          Potential Prompt: 
-          Role:"All incoming prompt's are singular IOC's (Indicators of Compramise) your task is to accept, assess and evaluate these IOC's snd provide a score of maliciousness out of 100 upon completion, please provide your full analysis when responding."
-          Prompt: "The Potential IOC is: + <Input Variable> 
-        If IOC has been submitted to ChatGPT, preform API call and return results
-
-The above is a rudamentary list that will be able to preform the neccesary research required of any profesional in their field
