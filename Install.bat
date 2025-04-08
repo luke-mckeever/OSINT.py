@@ -23,9 +23,14 @@ echo.
 echo To run the OSINT scanner, use:
 echo.
 echo     python OSINT.py --ip 8.8.8.8
+echo     python OSINT.py --url https://example.com
 echo     python OSINT.py --domain example.com
-echo     python OSINT.py --url http://site.com
-echo     python OSINT.py --hash abc123...
+echo     python OSINT.py --hash xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+echo     python OSINT.py --email jogn.doe@example.com 
+echo     python OSINT.py --account john.doe
+echo
+echo     To Output Results 
+echo     python OSINT.py --domain example.com --output file.txt
 echo.
 
 ENDLOCAL
